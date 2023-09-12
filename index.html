@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Emscripten-Generated Code</title>
+    <link rel="stylesheet" href="Utils/style.css">
+</head>
+<body>
+    <figure id="spinner">
+        <div class="spinner"></div>
+        <div class="spinner-text">emscripten</div>
+    </figure>
+    <div id="status" class="loading-message">Downloading...</div>
+    <div class="progress-bar">
+        <progress value="0" max="100" id="progress"></progress>
+    </div>
+    <label for="svgOutput"></label><textarea id="svgOutput" rows="10" cols="50" hidden></textarea>
+    <div id="container">
+
+        <div id="instructions">
+            <p>Shape parameters: An advanced user can modify the shape parameters by hand. To render the shape press the “Compute Shape” button.</p>
+            <label for="shapeInput"></label><textarea id="shapeInput" rows="5" cols="50"></textarea>
+            <div class="inline-buttons">
+                <button id="computeButton">Compute Shape</button>
+                <button id="exportButton">Export Shape</button>
+                <!-- Botón personalizado para cargar archivos -->
+                <button class="custom-upload-button">
+                    Upload Shape
+                    <input type="file" id="upload" accept=".txt" style="display: none;">
+                </button>
+                <button id="preview">Preview</button>
+                <button id="helpButton">Help</button>
+            </div>
+            <hr>
+            <ol class="zoom-instructions">
+                <li>Shape can be edited using the action buttons below.</li>
+                <li>Right-clicking inside a circle opens a pop-up window that allows the user to modify the parameters of the selected circle.</li>
+                <li>Right-clicking outside of all the circles opens a pop-up window that allows the user to modify the parameters of all the circles. </li>
+                <li>Dragging the mouse with the left button pressed inside a circle allows to change the circle location</li>
+                <li>Dragging the mouse with the left mouse button pressed outside all the circles allows to move the entire shape. </li>
+                <li>The mouse wheel allows zooming the entire shape.</li>
+            </ol>
+            <div class="inline-buttons">
+                <button id="middlecircle">New circle in the middle of a segment</button>
+            </div>
+            <div class="inline-buttons">
+                <button id="addcircle">Create a circle</button>
+                <button id="eraseButton">Erase a circle</button>
+            </div>
+            <div class="inline-buttons">
+                <button id="createconection">Add segment by clicking in extreme circles</button>
+                <button id="eraseconection">Remove a segment</button>
+            </div>
+            <div class="inline-buttons">
+                <button onclick="randomGenerate()">Generate random shape</button>
+                <button onclick="similarGenerate()">Generate similar shape</button>
+            </div>
+            <div class="inline-buttons">
+                <button id="noAction">Reset action</button>
+                <button onclick="downloadsvg()">Download SVG</button>
+            </div>
+            <div class="inline-buttons">
+                <button onclick="updateShapeInput();"><!--suppress CheckImageSize -->
+                    <img src="./Media/undo_icon.png" width="20" height="20" alt="Undo"></button>
+                <button onclick="redoShapeInput();"><!--suppress CheckImageSize -->
+                    <img src="./Media/redo_icon.png" width="20" height="20" alt="Redo"></button>
+            </div>
+        </div>
+        <div id="canvas_svg">
+            <div id="waiting-message">
+                Waiting for click⏱
+            </div>
+        </div>
+    </div>
+    <div id="popuphelp">
+        <span class="close">&times;</span>
+        <h2>Button Descriptions</h2>
+        <ul>
+            <li><strong>Compute Shape:</strong> Calculates the shape based on the input.</li>
+            <li><strong>Export Shape:</strong> Exports the shape to a text file.</li>
+            <li><strong>Upload Shape:</strong> Import a shape from a text file.</li>
+            <li><strong>Preview:</strong> Shows a preview of the shape (without the black lines and circles).</li>
+            <li><strong>New circle in the middle of a segment:</strong> Clicking on a segment adds a circle in the middle of the segment</li>
+            <li><strong>Create a circle:</strong> Clicking adds a circle.</li>
+            <li><strong>Erase a circle:</strong> Clicking removes a circle.</li>
+            <li><strong>Add segment by clicking in extreme circle:</strong> Click on two circles for make a segment between them</li>
+            <li><strong>Remove a segment</strong> Clicking on a segment erase the segment.</li>
+            <li><strong>Generate random SVG:</strong> Generates a random SVG shape.</li>
+            <li><strong>Generate similar SVG:</strong> Generates a similar SVG shape.</li>
+        </ul>
+    </div>
+    <div id="popup" class="popup" style="display: none;"></div>
+    <div id="popupall" class="popup" style="display: none;">
+        <h2>All Circles</h2>
+        <label for="globalRadius">Radius:</label>
+        <input type="number" id="globalRadius" placeholder="0" />
+        <label for="smooth">Smooth:</label>
+        <input type="range" id="smooth" min="0" max="2" step="0.1">
+        <button class="close-button" onclick="closePopup()">Close</button>
+    </div>
+
+    <script defer  type="text/javascript" src="blackbox.js"></script>
+    <script type="text/javascript" src="Utils/handleEvents.js"></script>
+    <script type="text/javascript" src="Utils/init.js"></script>
+    <script type="text/javascript" src="Utils/tools.js"></script>
+    <script src="app.js"></script>
+    </body>
+</html>

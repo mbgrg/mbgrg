@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1689410969 source:c:\luis\repositorio\imagesynthesisnew\sourcecode\tests\shapetreecommandline20190815\branchedshapesedition\mainbranchedshapesedition.cpp
+	<cstdlib>
+	<iostream>
+	<fstream>
+	<stdio.h>
+	<cstring>
+	<string.h>
+	<time.h>
+	"triangulation.h"
+
+1689411638 c:\luis\repositorio\imagesynthesisnew\sourcecode\tests\shapetreecommandline20190815\branchedshapesedition\triangulation.h
+	<iostream>
+	<vector>
+	<math.h>
+	<cstdlib>
+	<fstream>
+	<stdio.h>
+	<cstring>
+	<string.h>
+
+1688474492 source:c:\luis\repositorio\imagesynthesisnew\sourcecode\tests\shapetreecommandline20190815\branchedshapesedition\triangulation.cpp
+	<iostream>
+	<vector>
+	<math.h>
+	"triangulation.h"
+	<climits>
+	<time.h>
+

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Emscripten-Generated Code</title>
+    <link rel="stylesheet" href="Utils/style.css">
+</head>
+<body>
+<h1>Branched Shapes</h1>
+<hr>
+<figure id="spinner">
+    <div class="spinner"></div>
+    <div class="spinner-text">emscripten</div>
+</figure>
+<div id="status" class="loading-message">Downloading...</div>
+<div class="progress-bar">
+    <progress value="0" max="100" id="progress"></progress>
+</div>
+<p class="console-heading">This is the console for messages coming from C++ code:</p>
+<textarea id="output" class="console" rows="8" readonly></textarea>
+<hr>
+<p>Step 1: Modify the shape or write a new one, and press the 'Compute Shape' button:</p>
+<textarea id="shapeInput" rows="10" cols="50"></textarea>
+<button id="mybutton">Compute Shape</button>
+<hr>
+<p>Step 2: The SVG output is shown. You can modify it or leave it as is, and press the 'Draw Shape' button:</p>
+<textarea id="svgOutput" rows="10" cols="50" readonly></textarea>
+<div class="inline-buttons">
+    <button onclick="downloadsvg()">Download SVG</button>
+    <button onclick="addNewCircleToShapeInput(300, 400);">Draw button</button>
+</div>
+<hr>
+<p>Step 3: Finally, the shape is drawn:</p>
+<div id="canvas_svg"></div>
+
+<script async type="text/javascript" src="blackbox.js"></script>
+<script async type="text/javascript" src="Utils/tools.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
