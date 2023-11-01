@@ -92,22 +92,38 @@ function openPopup(mouseX, mouseY) {
         var smoothInput = document.getElementById("smooth");
         var globalRadiusInput = document.getElementById("globalRadius");
 
-        if (popupallAux === false) {
+        var angleInput = document.getElementById("angleInput");
+        var xInput = document.getElementById("xInput");
+        var yInput = document.getElementById("yInput");
 
+        if (popupallAux === false) {
             smoothInput.addEventListener("mousemove", function () {
                 event.stopPropagation();
                 const currentSmoothValue = smoothInput.value;
                 const smoothDifference = currentSmoothValue - previousSmoothValue;
-
                 allcircles(0, smoothDifference);
                 previousSmoothValue = currentSmoothValue;
             });
+
             globalRadiusInput.addEventListener("input", function () {
                 const newGlobalRadius = globalRadiusInput.value;
                 const radiusDifference = newGlobalRadius - previousGlobalRadius;
                 allcircles(radiusDifference, 0);
                 previousGlobalRadius = newGlobalRadius;
             });
+
+            angleInput.addEventListener("change", function () {
+                const newAngle = parseFloat(angleInput.value);
+                const x = parseFloat(xInput.value);
+                const y = parseFloat(yInput.value);
+                const angleDifference = newAngle - previousAngle;
+                rotate(angleDifference, x, y);
+                computeShape();
+                previousAngle = newAngle;
+            });
+            angleInput.value = "0";
+            xInput.value = "512";
+            yInput.value = "512";
 
             popupallAux = true;
         }
@@ -116,13 +132,14 @@ function openPopup(mouseX, mouseY) {
     }
 }
 
-
 function closePopup() {
     var globalRadiusInput = document.getElementById("globalRadius"); // Nuevo input
     globalRadiusInput.value=0;
     addShape();
     addAllCanvasEvents();
     popup2.style.display = "none";
+    angleInput.value = "0";
+    previousAngle = "0";
 }
 function allcircles(radius, smooth) {
     var lines = shapeInput.value.split("\n");
@@ -203,6 +220,7 @@ function addEvents() {
 
     draggableCircles = circulitos
         .on("mousedown", dragStarted)
+        .on("touchstart", touchStarted)
         .on("contextmenu", rightClick);
 }
 
@@ -351,10 +369,67 @@ function dragged(event) {
 }
 
 function dragEnded() {
+    if (!isRightClick(event) || popup.style.display === "block") return;
     isDragging = false;
     activeCircle = false;
     document.removeEventListener("mouseup", dragEnded);
     document.removeEventListener("mousemove", dragged);
+    drawFigure();
+    unselect();
+}
+var touch ;
+function touchStarted(event){
+    if(waitingMessage.style.display === "block") return
+    if (event.touches.length === 1) {
+        if (popup2.style.display === "block") return;
+        event.preventDefault();
+        if (selectedcircle == null) {
+            selectedcircle = this;
+            selectedcircle.setAttribute("stroke", "blue");
+            selectedcircle.setAttribute("stroke-width", "3");
+            showPopup(event.touches[0].pageX, event.touches[0].pageY);
+        }
+        drawFigure();
+    }
+    event.preventDefault();
+    activeCircle = this;
+    touch = event.touches[0];
+    selectedcircle = activeCircle;
+    initialX = parseFloat(activeCircle.getAttribute("cx"));
+    initialY = parseFloat(activeCircle.getAttribute("cy"));
+    activeCircle.setAttribute("stroke", "blue");
+    activeCircle.setAttribute("stroke-width", "3");
+
+    deltaX = touch.clientX;
+    deltaY = touch.clientY;
+    isDragging = true; // Marcar como arrastrando
+    activeCircle.addEventListener("touchmove", touchMoved);
+    document.addEventListener("touchend", touchEnded);
+
+}
+
+function touchMoved(event) {
+    popup.style.display = "none";
+    if (isDragging && activeCircle) {
+        touch = event.touches[0];
+        var offsetX = touch.clientX - deltaX;
+        var offsetY = touch.clientY - deltaY;
+        const newX = initialX + offsetX;
+        const  newY = initialY + offsetY;
+
+        activeCircle.setAttribute("cx", newX);
+        activeCircle.setAttribute("cy", newY);
+        hasDataChanged = true; // Marcar como datos modificados
+
+        updateCircleData(activeCircle, newX, newY);
+    }
+}
+
+function touchEnded() {
+    isDragging = false;
+    activeCircle = false;
+    document.removeEventListener("touchmove", touchMoved);
+    document.removeEventListener("touchend", touchEnded);
     drawFigure();
     unselect();
 }
@@ -430,7 +505,10 @@ function removeAllCanvasEvents() {
 function addAllCanvasEvents() {
     canvas.addEventListener("mousemove", HandleMovecanvas);
     canvas.addEventListener("wheel", handleWheelCanvas);
-    draggableCircles.on("mousedown", dragStarted).on("contextmenu", rightClick);
+    draggableCircles = circulitos
+        .on("mousedown", dragStarted)
+        .on("touchstart", touchStarted)
+        .on("contextmenu", rightClick);
     circulitos.on("click", function () {});
     waitingMessage.style.display = "none";
 }
@@ -463,4 +541,3 @@ function relMouseCoords(event) {
 function buttonColor(elementoBoton, color) {
     elementoBoton.style.backgroundColor = color;
 }
-

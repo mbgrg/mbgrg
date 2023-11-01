@@ -4701,6 +4701,8 @@ var asm = createWasm();
 /** @type {function(...*):?} */
 var ___wasm_call_ctors = createExportWrapper("__wasm_call_ctors");
 /** @type {function(...*):?} */
+var __Z8setColorRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE = Module["__Z8setColorRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE"] = createExportWrapper("_Z8setColorRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE");
+/** @type {function(...*):?} */
 var __Z19ComputeSVGFromShapePc = Module["__Z19ComputeSVGFromShapePc"] = createExportWrapper("_Z19ComputeSVGFromShapePc");
 /** @type {function(...*):?} */
 var _malloc = createExportWrapper("malloc");
@@ -4722,6 +4724,8 @@ var __Z17insertpointmiddledd = Module["__Z17insertpointmiddledd"] = createExport
 var __Z11insertpointii = Module["__Z11insertpointii"] = createExportWrapper("_Z11insertpointii");
 /** @type {function(...*):?} */
 var __Z9transformfffff = Module["__Z9transformfffff"] = createExportWrapper("_Z9transformfffff");
+/** @type {function(...*):?} */
+var __Z6rotatefff = Module["__Z6rotatefff"] = createExportWrapper("_Z6rotatefff");
 /** @type {function(...*):?} */
 var _main = Module["_main"] = createExportWrapper("main");
 /** @type {function(...*):?} */
@@ -4773,7 +4777,7 @@ var dynCall_iiiiij = Module["dynCall_iiiiij"] = createExportWrapper("dynCall_iii
 var dynCall_iiiiijj = Module["dynCall_iiiiijj"] = createExportWrapper("dynCall_iiiiijj");
 /** @type {function(...*):?} */
 var dynCall_iiiiiijj = Module["dynCall_iiiiiijj"] = createExportWrapper("dynCall_iiiiiijj");
-var ___emscripten_embedded_file_data = Module['___emscripten_embedded_file_data'] = 68756;
+var ___emscripten_embedded_file_data = Module['___emscripten_embedded_file_data'] = 68740;
 
 // include: postamble.js
 // === Auto-generated postamble setup entry stuff ===

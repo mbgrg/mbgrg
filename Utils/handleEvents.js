@@ -95,12 +95,31 @@ function handleAddButtonClick() {
     buttonColor(addButton, "#ff9800");
     waitingMessage.style.display = "block";
     removeAllCanvasEvents();
-    canvas.addEventListener("click", addcircle, { once: true });
+    canvas.addEventListener("mousedown", addcircle, { once: true });
+
+}
+
+function handleAddButtonClicks() {
+    handleNoActionClick();
+    buttonColor(addsButton, "#ff9800");
+    waitingMessage.style.display = "block";
+    removeAllCanvasEvents();
+    canvas.addEventListener("click", addcircle);
 }
 
 function handleEraseButtonClick() {
     handleNoActionClick();
     buttonColor(eraseButton, "#ff9800");
+    if (circulitos) {
+        waitingMessage.style.display = "block";
+        removeAllCanvasEvents();
+        circulitos.on("click", handleCircleClickForErase);
+    }
+}
+function handleEraseButtonClicks() {
+    handleNoActionClick();
+    buttonColor(erasesButton, "#ff9800");
+    circulitos.on("click", handleCircleClickForErase);
     if (circulitos) {
         waitingMessage.style.display = "block";
         removeAllCanvasEvents();
@@ -113,6 +132,8 @@ function handleCircleClickForErase() {
     waitingMessage.style.display = "none";
     buttonColor(eraseButton, "#4CAF50");
     addShape();
+    removeAllCanvasEvents();
+    circulitos.on("click", handleCircleClickForErase);
 }
 function handleComputeButtonClick() {
     addShape(shapeInput.value.split("\n"));
@@ -123,6 +144,31 @@ function handleComputeButtonClick() {
 function handleHelpButtonClick() {
     popuphelp.style.display = "block";
 }
+function handleBlankButtonClick() {
+    shapeInput.value = "1\n" +
+        "490.03424099999995 648\n" +
+        "100.000000\n" +
+        "1.000000\n" +
+        "0\n" +
+        "5\n" +
+        "1128602801\n" +
+        "480.000000\n" +
+        "30.000000\n" +
+        "1.000000\n" +
+        "0\n" +
+        "1\n" +
+        "1\n" +
+        "0.000000\n" +
+        "11\n" +
+        "0\n" +
+        "0.950000\n" +
+        "33\n" +
+        "73\n" +
+        "1\n"
+    computeShape();
+
+}
+
 function handleCloseButtonClick() {
     popuphelp.style.display = "none";
 }
@@ -217,3 +263,21 @@ function handleDocumentKeyDown(event) {
         redoShapeInput();
     }
 }
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleButton = document.getElementById("toggle-content-button");
+    const instructions = document.getElementById("instructions");
+    const canvasSvg = document.getElementById("canvas_svg");
+
+    let isInstructionsVisible = false;
+
+    toggleButton.addEventListener("click", function () {
+        if (isInstructionsVisible) {
+            instructions.style.display = "none";
+            canvasSvg.style.display = "block";
+        } else {
+            instructions.style.display = "block";
+            canvasSvg.style.display = "none";
+        }
+        isInstructionsVisible = !isInstructionsVisible;
+    });
+});

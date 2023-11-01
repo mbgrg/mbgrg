@@ -5,6 +5,21 @@ body {
     user-select: none;
 }
 
+
+
+
+/* Estilo para el botón o las líneas iniciales */
+#mobile-toggle-button {
+    display:none;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
 h1 {
     font-size: 1.5em;
     font-weight: bold;
@@ -140,11 +155,12 @@ button:hover {
 }
 
 #canvas_svg {
-    border: 0.0625em solid #ccc;
+    border: 0.2em solid black;
     width: 1024px; /*canvas size*/
-    height: 98vh;
+    height: 1024px;
     display: flex;
     align-items: stretch;
+    margin-left: 2em;
 }
 
 #canvas_svg svg {
@@ -321,4 +337,81 @@ div.emscripten_border {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     z-index: 9999;
+}
+
+.color-picker {
+    position: relative;
+    display: inline-block;
+}
+
+#color-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: conic-gradient(
+            red 0deg 30deg,
+            yellow 30deg 60deg,
+            green 60deg 90deg,
+            blue 90deg 120deg,
+            purple 120deg 150deg,
+            pink 150deg 180deg,
+            orange 180deg 210deg,
+            brown 210deg 240deg,
+            gray 240deg 270deg,
+            black 270deg 300deg,
+            olive 300deg 330deg,
+            violet 330deg 360deg
+    );
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.color-menu {
+    position: absolute;
+    top: 50px; /* Ajusta la posición del menú según tu diseño */
+    left: 0;
+    display: none;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.color-option {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+}
+
+
+@media (max-width: 1000px) {
+    #container #instructions {
+        display: none;
+
+    }
+    #mobile-toggle-button{
+        display:block;
+    }
+    button {
+       font-size: 1.8em; /* Ajusta el tamaño del texto según tus preferencias */ !important;
+        padding: 1em 1em; /* Ajusta el espacio alrededor del texto según tus preferencias */ !important;
+    }
+    .custom-upload-button {
+        font-size: 1.8em; /* Ajusta el tamaño del texto según tus preferencias */ !important;
+        padding: 1em 1em; /* Ajusta el espacio alrededor del texto según tus preferencias */ !important;
+    }
+    #canvas_svg {
+        margin: auto;
+    }
+    body{
+        padding:0;
+    }
+}
+#angleInput, #xInput, #yInput {
+    width: 3em; /* Ajusta el ancho según tus preferencias */
+    margin: 5px auto; /* Espacio entre los campos y centrado verticalmente */
 }

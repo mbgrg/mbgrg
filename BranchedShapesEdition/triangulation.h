@@ -991,6 +991,29 @@ class NodeTree{ ///AAA
   }
 
   ///********************************************************
+  /// nodeTree rotation (angle in degree)
+  ///********************************************************
+  double rotation(double angle,double cx,double cy){
+    static time_t timer=0;
+    angle =M_PI*angle/180.;
+    double co=cos(angle);
+    double si=sin(angle);
+
+    for(int k=0;k<n_.size();k++){
+        double x=n_[k].x-cx;
+        double y=n_[k].y-cy;
+        n_[k].x=cx+co*x+si*y;
+        n_[k].y=cy-si*x+co*y;
+    }
+    node_angles_computation();
+    time_t timer2;
+    time(&timer2);
+
+    return difftime(timer2,timer);
+  }
+
+
+  ///********************************************************
   /// nodeTree check_equality
   ///********************************************************
   bool check_equality(NodeTree &nT){
@@ -1013,7 +1036,7 @@ class NodeTree{ ///AAA
   ///********************************************************
   /// SVG FILE GENERATION
   ///********************************************************
-  void svg_generation(char name[200],bool draw_nodes=false){
+  void svg_generation(const char name[200], bool draw_nodes = false, const std::string& color = "red"){
 
     node_angles_computation();
 
@@ -1088,7 +1111,7 @@ class NodeTree{ ///AAA
     triangulation T;
     for(int k=0;k<(int) n_.size();k++){
       if(i_[k].size()==0){
-        fprintf(svgFile,"<circle cx=\"%lf\" cy=\"%lf\" r=\"%lf\" stroke=\"none\" fill=\"red\" /> \n",n_[k].x,n_[k].y,r_[k]);
+        fprintf(svgFile, "<circle cx=\"%lf\" cy=\"%lf\" r=\"%lf\" stroke=\"%s\" fill=\"%s\" />\n", n_[k].x, n_[k].y, r_[k], color.c_str(), color.c_str());
         continue;
       }
       for(int m=0;m<(int) i_[k].size();m++){
@@ -1215,7 +1238,7 @@ class NodeTree{ ///AAA
         if( ( dm2.x*(T.p[im].x-pk2.x)+dm2.y*(T.p[im].y-pk2.y) ) < 0 ) { dm2.x=-dm2.x; dm2.y=-dm2.y;}
 
         ///
-        fprintf(svgFile,"<path fill=\"red\" stroke=\"none\" d=\" \n");
+        fprintf(svgFile, "<path fill=\"%s\" stroke=\"%s\" d=\" \n", color.c_str(), color.c_str());
         fprintf(svgFile,"M %lf,%lf\n",pk1.x,pk1.y);
         double norm=(pk1-pm1).norm();
         point2d pk11=pk1+dk1*(norm/3.);
@@ -1235,7 +1258,8 @@ class NodeTree{ ///AAA
         #endif
         if(i_[k].size()>2){
           T.t.push_back( triangle(ik,ik1,ik2) );
-          fprintf(svgFile,"<path fill=\"red\" stroke=\"none\" d=\" \n");
+          fprintf(svgFile, "<path fill=\"%s\" stroke=\"%s\" d=\" \n", color.c_str(), color.c_str());
+
           fprintf(svgFile,"M %lf,%lf\n",T.p[ik].x,T.p[ik].y);
           fprintf(svgFile,"L %lf,%lf\n",pk1.x,pk1.y);
           fprintf(svgFile,"L %lf,%lf\n",pk2.x,pk2.y);
@@ -1243,7 +1267,7 @@ class NodeTree{ ///AAA
         }
         if(i_[ikm].size()>2){
           T.t.push_back( triangle(im,im1,im2) );
-          fprintf(svgFile,"<path fill=\"red\" stroke=\"none\" d=\" \n");
+          fprintf(svgFile, "<path fill=\"%s\" stroke=\"%s\" d=\" \n", color.c_str(), color.c_str());
           fprintf(svgFile,"M %lf,%lf\n",T.p[im].x,T.p[im].y);
           fprintf(svgFile,"L %lf,%lf\n",pm1.x,pm1.y);
           fprintf(svgFile,"L %lf,%lf\n",pm2.x,pm2.y);
@@ -1298,7 +1322,7 @@ class NodeTree{ ///AAA
             point2d p1=n_[k]+point2d(cos(a1),sin(a1))*r_[k];
             point2d p2=n_[k]+point2d(cos(a2),sin(a2))*r_[k];
 
-            fprintf(svgFile,"<path fill=\"red\" stroke=\"none\" d=\" \n");
+            fprintf(svgFile, "<path fill=\"%s\" stroke=\"%s\" d=\" \n", color.c_str(), color.c_str());
             fprintf(svgFile,"M %lf,%lf\n",p1.x,p1.y);
             fprintf(svgFile,"A %lf,%lf %d %d,%d %lf,%lf \n",r_[k],r_[k],0,1,0,p2.x,p2.y);
             fprintf(svgFile,"\">\n </path> \n");
@@ -1319,7 +1343,7 @@ class NodeTree{ ///AAA
             point2d p1=n_[ikm]+point2d(cos(a1),sin(a1))*r_[ikm];
             point2d p2=n_[ikm]+point2d(cos(a2),sin(a2))*r_[ikm];
 
-            fprintf(svgFile,"<path fill=\"red\" stroke=\"none\" d=\" \n");
+            fprintf(svgFile, "<path fill=\"%s\" stroke=\"%s\" d=\" \n", color.c_str(), color.c_str());
             fprintf(svgFile,"M %lf,%lf\n",p1.x,p1.y);
             fprintf(svgFile,"A %lf,%lf %d %d,%d %lf,%lf \n",r_[ikm],r_[ikm],0,0,0,p2.x,p2.y);
             fprintf(svgFile,"\">\n </path> \n");
@@ -1363,7 +1387,7 @@ class NodeTree{ ///AAA
 
   return;
 
-};
+ };
 
   /// *************************************************************
   ///    INSERT A NEW NODE IN THE MIDDLE OF THE SEGMENT
@@ -1745,7 +1769,7 @@ class NodeTree{ ///AAA
   unsigned int MaxNnodes,
   unsigned int MaxNeigbors=100,
   bool allow_branche_intersection=false,
-  int SymmetryType=0, /// ==0 no symmetry, ==1->180º, ==2->90º,==3->45º
+  int SymmetryType=0, /// ==0 no symmetry, ==1->180ï¿½, ==2->90ï¿½,==3->45ï¿½
   float node_radius_reduction_factor=1.) /// reduction of node radius factor
   {
     #ifdef DEBUG

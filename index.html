@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="Utils/style.css">
 </head>
 <body>
+    <div id="mobile-toggle-button">
+        <button id="toggle-content-button">Mostrar Contenido</button>
+    </div>
     <figure id="spinner">
         <div class="spinner"></div>
         <div class="spinner-text">emscripten</div>
@@ -32,6 +35,24 @@
                 </button>
                 <button id="preview">Preview</button>
                 <button id="helpButton">Help</button>
+
+            <button id="blankButton" style="display: none;">Blank template</button>
+                <div class="color-picker">
+                    <button id="color-button"></button>
+                    <div id="color-menu" class="color-menu">
+                        <div class="color-option" onclick="changeColor('red')" style="background-color: red;"></div>
+                        <div class="color-option" onclick="changeColor('blue')" style="background-color: blue;"></div>
+                        <div class="color-option" onclick="changeColor('green')" style="background-color: green;"></div>
+                        <div class="color-option" onclick="changeColor('yellow')" style="background-color: yellow;"></div>
+                        <div class="color-option" onclick="changeColor('orange')" style="background-color: orange;"></div>
+                        <div class="color-option" onclick="changeColor('purple')" style="background-color: purple;"></div>
+                        <div class="color-option" onclick="changeColor('pink')" style="background-color: pink;"></div>
+                        <div class="color-option" onclick="changeColor('brown')" style="background-color: brown;"></div>
+                        <div class="color-option" onclick="changeColor('gray')" style="background-color: gray;"></div>
+                        <div class="color-option" onclick="changeColor('black')" style="background-color: black;"></div>
+
+                    </div>
+                </div>
             </div>
             <hr>
             <ol class="zoom-instructions">
@@ -45,9 +66,13 @@
             <div class="inline-buttons">
                 <button id="middlecircle">New circle in the middle of a segment</button>
             </div>
+            <div class="inline-buttons" style="display: none;">
+                <button id="erasesButton" >Erase multiple circles</button>
+                <button id="addcircles">Create multiple circles</button>
+            </div>
             <div class="inline-buttons">
-                <button id="addcircle">Create a circle</button>
                 <button id="eraseButton">Erase a circle</button>
+                <button id="addcircle">Create a circle</button>
             </div>
             <div class="inline-buttons">
                 <button id="createconection">Add segment by clicking in extreme circles</button>
@@ -98,6 +123,10 @@
         <input type="number" id="globalRadius" placeholder="0" />
         <label for="smooth">Smooth:</label>
         <input type="range" id="smooth" min="0" max="2" step="0.1">
+        <label for="smooth">Rotate:</label>
+        <input type="number" id="angleInput" placeholder="Angle">
+        <input type="number" id="xInput" placeholder="Coord X">
+        <input type="number" id="yInput" placeholder="Coord Y">
         <button class="close-button" onclick="closePopup()">Close</button>
     </div>
 

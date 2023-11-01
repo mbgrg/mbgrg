@@ -9,6 +9,13 @@
 
 #include "triangulation.h"
 
+std::string globalColor = "red";
+
+EMSCRIPTEN_KEEPALIVE
+void setColor(const std::string& newColor) {
+    globalColor = newColor;
+}
+
 NodeTree nT;
 int main() {
 
@@ -22,10 +29,10 @@ int main() {
   }
 
   /// GENERATION OF A SVG FILE (THE SECOND PARAMETERS IS USED TO DRAW THE CIRCLES IN BLACK)
-  nT.svg_generation("shape.svg",true);
+  nT.svg_generation("shape.svg",true, globalColor);
 
   /// SAVING THE NEW SHAPE FILES
-  nT.svg_generation("shape_new.svg",true);
+  nT.svg_generation("shape_new.svg",true , globalColor);
   nT.write("shape_new.txt");
   return 0;
 }
@@ -71,35 +78,35 @@ char* allocateAndExtract() {
 }
 EMSCRIPTEN_KEEPALIVE
 char* downloadsvg() {
-    nT.svg_generation("shape_new.svg", false);
+    nT.svg_generation("shape_new.svg", false, globalColor);
     return readContentFromFile("shape_new.svg");
 }
 
 EMSCRIPTEN_KEEPALIVE
 char* erasepoint(int argc) {
     nT.erase_point(argc);
-    nT.svg_generation("shape_new.svg", true);
+    nT.svg_generation("shape_new.svg", true, globalColor);
     return allocateAndExtract();
 }
 
 EMSCRIPTEN_KEEPALIVE
 char* similargeneration() {
     nT=NodeTree_similar_generation(nT);
-    nT.svg_generation("shape_new.svg", true);
+    nT.svg_generation("shape_new.svg", true, globalColor);
     return allocateAndExtract();
 }
 
 EMSCRIPTEN_KEEPALIVE
 char* randomgeneration() {
     nT=NodeTree_random_generator();
-    nT.svg_generation("shape_new.svg", true);
+    nT.svg_generation("shape_new.svg", true, globalColor);
     return allocateAndExtract();
 }
 
 EMSCRIPTEN_KEEPALIVE
 char* connectnodes(int argc, int argv) {
     nT.connect_nodes(argc,argv);
-    nT.svg_generation("shape_new.svg", true);
+    nT.svg_generation("shape_new.svg", true, globalColor);
     return allocateAndExtract();
 }
 
@@ -109,7 +116,7 @@ char* disconnectnodes(double x, double y) {
     int j = 0;
     nT.segment_distance(x, y, i, j);
     nT.disconnect_nodes(i, j);  // Assuming disconnect_nodes() takes indices
-    nT.svg_generation("shape_new.svg", true);
+    nT.svg_generation("shape_new.svg", true, globalColor);
     return allocateAndExtract();
 }
 
@@ -121,14 +128,14 @@ char* insertpointmiddle(double x, double y) {
     nT.insert_point((nT.n_[i] + nT.n_[j]) * 0.5,
                     (nT.r_[i] + nT.r_[j]) * 0.5,
                     (nT.s_[i] + nT.s_[j]) * 0.5, i, j);
-    nT.svg_generation("shape_new.svg", true);
+    nT.svg_generation("shape_new.svg", true, globalColor);
     return allocateAndExtract();
 }
 
 EMSCRIPTEN_KEEPALIVE
 char* insertpoint(int argc, int argv) {
   nT.insert_point(point2d(argc,argv));
-  nT.svg_generation("shape_new.svg", true);
+  nT.svg_generation("shape_new.svg", true, globalColor);
   return allocateAndExtract();
 }
 
@@ -136,6 +143,13 @@ char* insertpoint(int argc, int argv) {
 EMSCRIPTEN_KEEPALIVE
 char* transform(float zoom_factor, float zx, float zy, float dx, float dy) {
    nT.transformation(zoom_factor, zx, zy, dx, dy);
-   nT.svg_generation("shape_new.svg", true);
+   nT.svg_generation("shape_new.svg", true, globalColor);
+   return allocateAndExtract();
+}
+
+EMSCRIPTEN_KEEPALIVE
+char* rotate(float angle,float dx, float dy) {
+     nT.rotation(angle,dx,dy);
+   nT.svg_generation("shape_new.svg", true, globalColor);
    return allocateAndExtract();
 }
