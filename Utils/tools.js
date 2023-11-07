@@ -112,7 +112,8 @@ function openPopup(mouseX, mouseY) {
                 previousGlobalRadius = newGlobalRadius;
             });
 
-            angleInput.addEventListener("change", function () {
+            angleInput.addEventListener("mousemove", function () {
+                event.stopPropagation();
                 const newAngle = parseFloat(angleInput.value);
                 const x = parseFloat(xInput.value);
                 const y = parseFloat(yInput.value);
@@ -121,6 +122,7 @@ function openPopup(mouseX, mouseY) {
                 computeShape();
                 previousAngle = newAngle;
             });
+
             angleInput.value = "0";
             xInput.value = "512";
             yInput.value = "512";
@@ -139,6 +141,8 @@ function closePopup() {
     addAllCanvasEvents();
     popup2.style.display = "none";
     angleInput.value = "0";
+    xInput.value = "512";
+    yInput.value = "512";
     previousAngle = "0";
 }
 function allcircles(radius, smooth) {

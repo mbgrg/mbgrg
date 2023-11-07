@@ -411,7 +411,7 @@ div.emscripten_border {
         padding:0;
     }
 }
-#angleInput, #xInput, #yInput {
+#xInput, #yInput {
     width: 3em; /* Ajusta el ancho según tus preferencias */
     margin: 5px auto; /* Espacio entre los campos y centrado verticalmente */
 }

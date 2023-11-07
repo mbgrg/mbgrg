@@ -25,7 +25,7 @@ var Module = {
         if (m && now - Module.setStatus.last.time < 30) return; // if this is a progress update, skip it if too soon
         Module.setStatus.last.time = now;
         Module.setStatus.last.text = text;
-        if (m) {
+        /*if (m) {
             text = m[1];
             progressElement.value = parseInt(m[2]) * 100;
             progressElement.max = parseInt(m[4]) * 100;
@@ -36,7 +36,7 @@ var Module = {
             progressElement.max = null;
             progressElement.hidden = true;
             if (!text) spinnerElement.hidden = true;
-        }
+        }*/
         statusElement.innerHTML = text;
     },
     totalDependencies: 0,
@@ -58,11 +58,10 @@ window.onerror = (message, source, lineno, colno, error) => {
     if (
         message.includes('Uncaught TypeError: Module.ccall is not a function') || message.includes('Uncaught RuntimeError: Aborted(Assertion failed: native function `stackSave` called before runtime initialization)')
     ) {
-        // Espera 5 segundos antes de recargar la página
+        // Espera 3 segundos antes de recargar la página
         setTimeout(() => {
-            console.log("hola");
             window.location.reload();
-        }, 500);
+        }, 300);
     } else {
         // Si no es el error específico, solo muestra el mensaje de error en la consola
         console.error(message);
@@ -83,6 +82,7 @@ function changeColor(colorValue){
         ["string"], // argument types
         [colorValue], // arguments
     );
+    colorMenu.style.display = 'none';
     computeShape();
     drawFigure();
 }
@@ -251,5 +251,7 @@ window.onload = function() {
 
         // Simula un clic en el botón
         computeButton.click();
-    }, 100);
+        spinnerElement.hidden = true;
+
+    }, 300);
 };
