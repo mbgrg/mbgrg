@@ -415,3 +415,11 @@ div.emscripten_border {
     width: 3em; /* Ajusta el ancho según tus preferencias */
     margin: 5px auto; /* Espacio entre los campos y centrado verticalmente */
 }
+
+#canvas_svg circle {
+    pointer-events: none; /* Inicialmente, deshabilita los eventos de puntero en todos los círculos */
+}
+
+#canvas_svg circle.draggable-circle {
+    pointer-events: visible; /* Habilita los eventos de puntero solo en los círculos con la clase "draggable-circle" */
+}

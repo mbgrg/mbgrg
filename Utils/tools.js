@@ -226,7 +226,7 @@ function addEvents() {
         .on("mousedown", dragStarted)
         .on("touchstart", touchStarted)
         .on("contextmenu", rightClick);
-}
+    }
 
 function showPopup(mouseX, mouseY) {
     var shapeInput = document.getElementById("shapeInput");
@@ -264,7 +264,7 @@ function showPopup(mouseX, mouseY) {
         popup.style.cursor = "grab";
     });
     popup.innerHTML = `<label>Radius:</label>
-    <input type="number" id="radiusInput" value="${currentRadius}" step="1" min="0"><br>
+    <input type="number" id="radiusInput" value="${currentRadius}" step="1" min="1"><br>
     <label>Smooth:</label>
     <input type="range" id="smoothInput" value="${currentSmooth}" min="0" max="2" step="0.1"><br>
     <label>X:</label>
